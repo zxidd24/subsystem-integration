@@ -4,11 +4,11 @@
 [![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)](https://www.mysql.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> 一个完整的数据可视化平台，集成统一登录（SSO）功能，支持与统一登录系统无缝对接。
+> 数据可视化平台，集成统一登录（SSO）功能，支持与统一登录系统无缝对接。
 
 ## 📋 项目概述
 
-本项目是一个基于Node.js + Express + MySQL的数据可视化平台，专门为西安城乡融合要素交易市场设计。项目已完整集成统一登录（SSO）功能，支持与统一登录系统进行对接，为用户提供安全、便捷的单点登录体验。
+本项目是一个基于Node.js + Express + MySQL的数据可视化平台，专门为西安城乡融合要素交易市场设计。项目已完整集成（测试）统一登录（SSO）功能，支持与统一登录系统进行对接，为用户提供安全、便捷的单点登录体验。
 
 ### 🎯 主要特性
 
@@ -380,31 +380,8 @@ tail -f logs/access.log
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
-## 🤝 贡献指南
-
-欢迎提交 Issue 和 Pull Request！
-
-1. Fork 本项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开 Pull Request
-
 ## 📞 联系方式
 
-- **项目维护者**: zxidd24
+- **项目维护者**: 张哲溪
 - **GitHub**: [https://github.com/zxidd24](https://github.com/zxidd24)
-- **邮箱**: [your-email@example.com]
-
-## 🙏 致谢
-
-感谢以下开源项目的支持：
-
-- [ECharts](https://echarts.apache.org/) - 数据可视化库
-- [Express.js](https://expressjs.com/) - Web应用框架
-- [MySQL](https://www.mysql.com/) - 关系型数据库
-- [Node.js](https://nodejs.org/) - JavaScript运行环境
-
----
-
-⭐ 如果这个项目对您有帮助，请给我们一个星标！ 
+- **邮箱**: [z1124340034@sina.com]
