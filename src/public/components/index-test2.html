@@ -662,7 +662,7 @@ function mergeCells(table, columnIndex) {
                 }] : []
             });
         }
-        fetch('echarts/Data/陕西街道.geojson')
+        fetch('/assets/Data/陕西街道.geojson')
             .then(response => response.json())
             .then(geoJson => {
                 const xianDistricts = geoJson.features.filter(feature =>

@@ -4,9 +4,9 @@ const mysql = require("mysql2");
 const path = require('path');
 
 // 导入路由
-const ssoRoutes = require('./routes/sso');
-const rolesRoutes = require('./routes/roles');
-const mockSsoRoutes = require('./routes/mock-sso');
+const ssoRoutes = require('../routes/sso');
+const rolesRoutes = require('../routes/roles');
+const mockSsoRoutes = require('../routes/mock-sso');
 
 const app = express();
 const port = 3000;
@@ -14,8 +14,16 @@ const port = 3000;
 // 中间件配置
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, 'public')));
+
+// 主页面路由 - 必须在静态文件中间件之前
+app.get('/', (req, res) => {
+    res.redirect('/components/index-test2.html');
+});
+
+// 静态文件中间件
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../public/components')));
+app.use(express.static(path.join(__dirname, '../public/assets')));
 
 // 数据库连接配置
 const db = mysql.createConnection({
@@ -38,10 +46,7 @@ app.use('/api/sso', ssoRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/mock-sso', mockSsoRoutes); // 模拟统一登录接口
 
-// 主页面路由
-app.get('/', (req, res) => {
-    res.redirect('/index-test2.html');
-});
+
 
 // 退出登录页面
 app.get('/logout', (req, res) => {

@@ -34,17 +34,17 @@ if mysql -h localhost -u root -pRoot@123456 -e "USE my_database; SHOW TABLES LIK
     echo "✅ 数据库表已存在"
 else
     echo "📋 初始化数据库表结构..."
-    if [ -f "sql_files/create_sys_role_table.sql" ]; then
-        mysql -h localhost -u root -pRoot@123456 my_database < sql_files/create_sys_role_table.sql
+    if [ -f "src/database/create_sys_role_table.sql" ]; then
+        mysql -h localhost -u root -pRoot@123456 my_database < src/database/create_sys_role_table.sql
         echo "✅ 数据库表初始化完成"
     else
-        echo "❌ 数据库初始化脚本不存在: sql_files/create_sys_role_table.sql"
+        echo "❌ 数据库初始化脚本不存在: src/database/create_sys_role_table.sql"
     fi
 fi
 
 # 启动服务
 echo "🌐 启动Web服务..."
-echo "   主页面: http://localhost:3000/index-test2.html"
+echo "   主页面: http://localhost:3000/components/index-test2.html"
 echo "   SSO拦截页面: http://localhost:3000/sso/index.html"
 echo "   退出页面: http://localhost:3000/logout"
 echo ""
@@ -52,4 +52,4 @@ echo "按 Ctrl+C 停止服务"
 echo ""
 
 # 启动应用
-node app.js 
+node src/server/app.js 
