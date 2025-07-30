@@ -1,179 +1,410 @@
-# 数据可视化展示平台 Realtime Deal Dashboard
+# DashBoard 统一登录集成系统
 
-## 项目简介
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)](https://www.mysql.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-本项目为“西安城乡融合要素交易市场数据可视化展示平台”，实现了MySQL数据库大数据批量导入、表结构适配、数据可视化、前后端联动、自动化脚本、可视化地图联动等功能。支持通过WebSocket实时推送数据，支持区域与街道多级联动筛选。
+> 一个完整的数据可视化平台，集成统一登录（SSO）功能，支持与统一登录系统无缝对接。
 
----
+## 📋 项目概述
 
-## 技术栈
+本项目是一个基于Node.js + Express + MySQL的数据可视化平台，专门为西安城乡融合要素交易市场设计。项目已完整集成统一登录（SSO）功能，支持与统一登录系统进行对接，为用户提供安全、便捷的单点登录体验。
 
-- **前端**：HTML5、CSS3、原生JavaScript、ECharts、Font Awesome
-- **后端**：Node.js、Express、WebSocket（ws）、MySQL2
-- **数据库**：MySQL 8.0+
-- **可视化**：ECharts（区县/街道地图联动与高亮等）
-- **自动化脚本**：Shell（备份、恢复、批量导入）
-- **可视化管理**：Sequel Ace
-- **版本管理**：Git、GitHub
+### 🎯 主要特性
 
----
+- **📊 数据可视化**: 基于ECharts的交互式数据图表展示
+- **🔐 统一登录**: 完整的SSO集成，支持token验证和用户信息同步
+- **👥 用户管理**: 基于角色的用户权限管理
+- **📱 响应式设计**: 适配各种设备和屏幕尺寸
+- **🔄 实时数据**: WebSocket实时数据推送
+- **📤 数据导出**: 支持Excel格式数据导出
+- **🧪 测试环境**: 完整的模拟统一登录测试环境
 
-## 目录结构与文件说明
+## 🏗️ 技术架构
 
-```
-Database/
-├── index-test2.html           # 前端主页面（数据大屏+地图+表格+与Echarts图联动）
-├── mysql-test2.js             # 后端服务（Node.js+WebSocket+MySQL）
-├── echarts/                   # ECharts地图及相关数据
-│   ├── index.html             # ECharts地图单页演示
-│   ├── main.js                # ECharts地图渲染逻辑
-│   └── Data/
-│       ├── 陕西街道.geojson   # 西安市区/街道GeoJSON地图数据
-│       └── 陕西街道.qmd       # 地图数据说明/辅助
-├── sql_files/                 # SQL建表、结构、数据、测试等（本地部署时可以删除）
-│   ├── create_tables_structure.sql
-│   ├── update_sys_article_structure.sql
-│   ├── update_sys_organization_structure.sql
-│   ├── update_pt_pro_tenders_structure.sql
-│   ├── ...                    # 其他结构/数据/模板/测试SQL
-├── node_modules/              # Node.js依赖
-├── package.json               # Node.js依赖声明
-├── package-lock.json          # 依赖锁定
-├── backups/                   # 数据库备份文件夹
-│   └── my_database_backup_*.sql
-├── restore_database.sh        # 数据库恢复脚本
-├── backup_database.sh         # 数据库备份脚本
-├── run_sql.sh                 # 批量导入SQL脚本
-├── README.md                  # 项目说明文档（本文件）
-├── sequel_ace_queries.sql     # Sequel Ace常用SQL集合
-├── sequel_ace_connection.json # Sequel Ace连接配置示例
-├── .git/                      # Git版本管理
-├── .vscode/                   # VSCode开发配置
-```
+### 前端技术栈
+- **HTML5 + CSS3**: 现代化页面布局和样式
+- **JavaScript ES6+**: 原生JavaScript开发
+- **ECharts 5.4.3**: 数据可视化图表库
+- **WebSocket**: 实时数据通信
 
----
+### 后端技术栈
+- **Node.js**: 服务器运行环境
+- **Express.js**: Web应用框架
+- **MySQL**: 关系型数据库
+- **Axios**: HTTP客户端
+- **ws**: WebSocket服务器
 
-## 主要功能
+### 数据库设计
+- **sys_article**: 文章数据表
+- **sys_organization**: 组织机构表
+- **pt_pro_tenders**: 项目投标表
+- **pt_pro_cq_type**: 项目成交类型表
+- **sys_role**: 角色管理表
+- **sys_user**: 用户管理表
 
-- MySQL数据库批量导入、表结构自动适配、主键/字段冲突修复
-- 支持大体量SQL数据导入与清理
-- 后端定时（每小时）查询数据库，通过WebSocket推送数据
-- 前端页面美观简洁易读，支持区域（区）筛选、街道联动高亮、表格/地图/统计卡片联动等
-- ECharts地图支持区县下钻街道、返回、地图高亮等，提高易读性
-- 自动化备份、恢复、批量导入脚本
-- 完善的本地部署与开源支持
+## 🚀 快速开始
 
-## 待完成开发任务
-1. **服务器资源：**
-    - 服务器 IP 或域名：
-    - 可用端口：
-    - 服务器访问权限：
-2. **数据库资源：**
-    - 数据库连接信息：
-    - 数据库访问权限：
-    - 数据导入权限：
-3. **网络资源：**
-    - 域名解析：
-    - SSL 证书：
-    - 防火墙配置：
-4. **运维支持：**
-    - 服务器维护：
-    - 数据库备份：
-    - 监控告警：
+### 环境要求
 
----
+- **Node.js**: 18.0 或更高版本
+- **MySQL**: 8.0 或更高版本
+- **npm**: 包管理器
 
-## 依赖安装
+### 安装步骤
 
-1. 安装Node.js（建议v16+）和npm
-2. 安装MySQL 8.0+
-3. 安装依赖：
+1. **克隆项目**
+   ```bash
+   git clone https://github.com/zxidd24/subsystem-integration.git
+   cd subsystem-integration
+   ```
+
+2. **安装依赖**
    ```bash
    npm install
    ```
 
----
+3. **配置数据库**
+   ```bash
+   # 启动MySQL服务
+   mysql.server start
+   
+   # 创建数据库
+   mysql -u root -p
+   CREATE DATABASE my_database;
+   USE my_database;
+   
+   # 导入数据库结构
+   mysql -u root -p my_database < sql_files/create_tables_structure.sql
+   mysql -u root -p my_database < sql_files/create_sys_role_table.sql
+   ```
 
-## 数据库配置与连接
+4. **修改配置**
+   
+   编辑 `config/sso-config.js` 文件：
+   ```javascript
+   module.exports = {
+       appkey: 'dashboard_system',           // 子系统身份标识
+       appsecret: 'dashboard_secret_2024',   // 子系统密钥
+       ssoTokenUrl: 'http://localhost:3000/mock-sso/token', // 统一登录验证地址
+       // ... 其他配置
+   };
+   ```
 
-- 默认数据库名：`my_database`
-- 默认MySQL用户：`root`，密码：`Root@123456`
-- 连接配置在`mysql-test2.js`：
-  ```js
-  const db = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: 'Root@123456',
-      database: 'my_database'
-  });
-  ```
-- 如需修改数据库名、用户、密码，请同步修改`mysql-test2.js`和相关脚本
+5. **启动服务**
+   ```bash
+   # 使用启动脚本（推荐）
+   ./start.sh
+   
+   # 或手动启动
+   node app.js
+   ```
 
----
+6. **访问应用**
+   - 主页面: http://localhost:3000/index-test2.html
+   - 模拟统一登录: http://localhost:3000/test-sso.html
+   - SSO拦截页面: http://localhost:3000/sso/index.html
 
-## 数据批量导入与表结构适配
+## 🔧 功能模块
 
-- 所有建表、结构、数据SQL均在`sql_files/`目录
-- 推荐使用`run_sql.sh`批量导入：
-  ```bash
-  bash run_sql.sh
-  ```
-- 可用`backup_database.sh`、`restore_database.sh`进行备份/恢复
+### 1. 统一登录集成
 
----
+#### SSO验证流程
+```
+用户访问 → 统一登录系统 → 生成token → 跳转子系统 → 验证token → 显示用户信息
+```
 
-## 启动后端服务
+#### 核心接口
+- `POST /api/sso/validate`: Token验证接口
+- `GET /api/sso/logout`: 退出登录接口
+- `GET /api/sso/user-info`: 用户信息获取接口
+- `POST /api/roles/getRolesList`: 角色获取接口
+
+#### 配置文件
+- `config/sso-config.js`: SSO配置文件
+- `public/sso/index.html`: SSO拦截页面
+- `routes/sso.js`: SSO相关接口
+
+### 2. 数据可视化
+
+#### 图表类型
+- **柱状图**: 成交金额和成交笔数统计
+- **饼图**: 项目类别分布
+- **地图**: 行政区划数据展示
+
+#### 数据源
+- 实时数据库查询
+- WebSocket实时推送
+- 定时数据更新（每小时）
+
+### 3. 用户管理
+
+#### 角色系统
+- **管理员**: 完整系统权限
+- **普通用户**: 数据查看权限
+- **查看用户**: 只读权限
+
+#### 用户信息
+- 用户名和昵称
+- 角色ID和权限
+- 行政区划代码
+- 登录时间记录
+
+## 📖 使用指南
+
+### 测试SSO功能
+
+1. **启动服务**
+   ```bash
+   node app.js
+   ```
+
+2. **访问模拟统一登录**
+   ```
+   http://localhost:3000/test-sso.html
+   ```
+
+3. **点击"数据可视化平台"**
+   - 系统自动生成测试token
+   - 跳转到SSO拦截页面
+   - 验证成功后显示用户信息
+
+4. **查看主页面**
+   - 右上角显示用户信息
+   - 数据图表正常展示
+   - 测试退出登录功能
+
+### 生产环境部署
+
+1. **修改SSO配置**
+   ```javascript
+   // config/sso-config.js
+   ssoTokenUrl: 'http://your-sso-server/api/sso/token'
+   ```
+
+2. **配置数据库连接**
+   ```javascript
+   // app.js
+   const db = mysql.createConnection({
+       host: 'your-db-host',
+       user: 'your-db-user',
+       password: 'your-db-password',
+       database: 'your-database'
+   });
+   ```
+
+3. **设置环境变量**
+   ```bash
+   export NODE_ENV=production
+   export PORT=3000
+   ```
+
+4. **使用PM2部署**
+   ```bash
+   npm install -g pm2
+   pm2 start app.js --name dashboard
+   pm2 startup
+   pm2 save
+   ```
+
+## 🔍 API文档
+
+### SSO验证接口
+
+**POST** `/api/sso/validate`
+
+验证统一登录传递的token。
+
+**请求参数:**
+```json
+{
+    "code": "统一登录传递的token"
+}
+```
+
+**响应格式:**
+```json
+{
+    "success": true,
+    "message": "验证成功",
+    "data": {
+        "ssousername": "统一登录用户名",
+        "username": "真实用户名",
+        "roleid": "角色ID",
+        "xzqh": "行政区划代码",
+        "nickname": "昵称",
+        "tel": "电话号码",
+        "isBindUser": "是否绑定用户"
+    }
+}
+```
+
+### 角色获取接口
+
+**POST** `/api/roles/getRolesList`
+
+供统一登录系统调用，获取子系统角色列表。
+
+**请求参数:**
+```json
+{
+    "pageNo": 1,
+    "pageSize": 10,
+    "xzqhdm": "行政区划代码"
+}
+```
+
+**响应格式:**
+```json
+{
+    "success": true,
+    "msg": "查询成功",
+    "data": [
+        {
+            "id": "角色ID",
+            "rolename": "角色名称"
+        }
+    ],
+    "totalcount": "总数量"
+}
+```
+
+## 📁 项目结构
+
+```
+DashBoard/
+├── app.js                          # 主服务器文件
+├── config/
+│   └── sso-config.js              # SSO配置文件
+├── routes/
+│   ├── sso.js                     # SSO相关接口
+│   ├── roles.js                   # 角色获取接口
+│   └── mock-sso.js               # 模拟统一登录
+├── public/
+│   ├── sso/
+│   │   └── index.html            # SSO拦截页面
+│   └── test-sso.html             # 模拟统一登录
+├── sql_files/
+│   ├── create_sys_role_table.sql # 角色用户表
+│   └── create_tables_structure.sql # 基础表结构
+├── echarts/
+│   ├── Data/                     # 地图数据
+│   ├── index.html               # 图表展示页面
+│   └── main.js                  # 图表逻辑
+├── index-test2.html             # 主页面
+├── start.sh                     # 启动脚本
+├── demo.sh                      # 演示脚本
+├── test-sso.js                  # 接口测试
+├── package.json                 # 项目配置
+└── README.md                    # 项目说明
+```
+
+## 🛠️ 开发指南
+
+### 本地开发
+
+1. **安装开发依赖**
+   ```bash
+   npm install
+   ```
+
+2. **启动开发服务器**
+   ```bash
+   npm run dev
+   ```
+
+3. **运行测试**
+   ```bash
+   node test-sso.js
+   ```
+
+### 代码规范
+
+- 使用ES6+语法
+- 遵循JavaScript标准规范
+- 添加适当的注释
+- 保持代码简洁可读
+
+### 调试技巧
+
+1. **查看日志**
+   ```bash
+   tail -f logs/app.log
+   ```
+
+2. **数据库调试**
+   ```bash
+   mysql -u root -p my_database
+   ```
+
+3. **接口测试**
+   ```bash
+   curl -X POST http://localhost:3000/api/sso/validate \
+        -H "Content-Type: application/json" \
+        -d '{"code":"test_token"}'
+   ```
+
+## 🐛 故障排除
+
+### 常见问题
+
+1. **数据库连接失败**
+   - 检查MySQL服务是否启动
+   - 验证数据库连接配置
+   - 确认数据库用户权限
+
+2. **SSO验证失败**
+   - 检查appkey和appsecret配置
+   - 验证统一登录系统地址
+   - 查看网络连接状态
+
+3. **页面无法访问**
+   - 确认Node.js服务已启动
+   - 检查端口是否被占用
+   - 验证防火墙设置
+
+### 日志查看
 
 ```bash
-node mysql-test2.js
+# 查看应用日志
+tail -f logs/app.log
+
+# 查看错误日志
+tail -f logs/error.log
+
+# 查看访问日志
+tail -f logs/access.log
 ```
-- 启动后会监听3000端口，WebSocket推送数据，Express静态服务支持前端页面访问
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+
+## 🤝 贡献指南
+
+欢迎提交 Issue 和 Pull Request！
+
+1. Fork 本项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 打开 Pull Request
+
+## 📞 联系方式
+
+- **项目维护者**: zxidd24
+- **GitHub**: [https://github.com/zxidd24](https://github.com/zxidd24)
+- **邮箱**: [your-email@example.com]
+
+## 🙏 致谢
+
+感谢以下开源项目的支持：
+
+- [ECharts](https://echarts.apache.org/) - 数据可视化库
+- [Express.js](https://expressjs.com/) - Web应用框架
+- [MySQL](https://www.mysql.com/) - 关系型数据库
+- [Node.js](https://nodejs.org/) - JavaScript运行环境
 
 ---
 
-## 启动前端页面
-
-- 直接用浏览器打开`index-test2.html`，或访问：
-  ```
-  http://localhost:3000/index-test2.html
-  ```
----
-
-## ECharts地图说明
-
-- 地图数据位于`echarts/Data/陕西街道.geojson`
-- 支持区县下钻街道，街道高亮（有交易）、灰色（无交易）等
-- 右下角显示高亮街道数量与灰色区域说明
-
----
-
-## Sequel Ace可视化管理
-### 开发时使用的数据库可视化软件，仅用于提高我对数据库内容的了解，可使用其他类似软件或忽略
-- `sequel_ace_connection.json`为连接示例
-- `sequel_ace_queries.sql`为常用SQL集合
-
----
-
-## 本地部署与常见问题
-
-1. 克隆项目：
-   ```bash
-   git clone https://github.com/zxidd24/realtime-deal-dashboard.git
-   cd realtime-deal-dashboard
-   ```
-2. 安装依赖、导入数据库、启动服务（见上文）
-3. 如遇端口占用、依赖缺失、数据库连接失败等，请检查：
-   - MySQL服务是否启动
-   - 端口（默认3000）是否被占用
-   - 数据库名、用户、密码是否一致
-   - 依赖是否安装完整
-4. 地图不显示请检查`echarts/Data/陕西街道.geojson`是否存在
-
-
----
-
-## 联系方式
-- 作者：张哲溪
-- 作者邮箱：z1124340034@sina.com
-- 作者GitHub: [zxidd24](https://github.com/zxidd24)
-- 项目地址: https://github.com/zxidd24/realtime-deal-dashboard 
+⭐ 如果这个项目对您有帮助，请给我们一个星标！ 
