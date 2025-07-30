@@ -1,1 +1,0 @@
-TRUNCATE TABLE pt_pro_tenders; 
