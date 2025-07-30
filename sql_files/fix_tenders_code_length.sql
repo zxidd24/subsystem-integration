@@ -1,0 +1,1 @@
+ALTER TABLE pt_pro_tenders MODIFY COLUMN tenders_code VARCHAR(100) DEFAULT NULL COMMENT '投标代码'; 

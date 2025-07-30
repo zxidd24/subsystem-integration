@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>统一登录验证中...</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4fc3f7 0%, #0288d1 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .loading-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4fc3f7;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .loading-subtext {
+            color: #666;
+            font-size: 14px;
+        }
+        .error-message {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">正在验证身份...</div>
+        <div class="loading-subtext">请稍候，正在与统一登录系统进行身份验证</div>
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script>
+        // SSO拦截页面逻辑
+        class SSOHandler {
+            constructor() {
+                this.code = null;
+                this.exiturl = null;
+                this.init();
+            }
+
+            init() {
+                // 从URL中获取参数
+                const urlParams = new URLSearchParams(window.location.search);
+                this.code = urlParams.get('code');
+                this.exiturl = urlParams.get('exiturl');
+
+                // 检查是否有code参数
+                if (!this.code) {
+                    this.showError('缺少必要的验证参数，请从统一登录系统重新进入');
+                    return;
+                }
+
+                // 将exiturl存储到localStorage中，供后续使用
+                if (this.exiturl) {
+                    localStorage.setItem('sso_exiturl', this.exiturl);
+                }
+
+                // 开始验证流程
+                this.validateToken();
+            }
+
+            async validateToken() {
+                try {
+                    // 添加3秒延迟，模拟验证过程
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                    
+                    const response = await fetch('/api/sso/validate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            code: this.code
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // 验证成功，存储用户信息
+                        this.storeUserInfo(result.data);
+                        // 跳转到主页面
+                        this.redirectToMain();
+                    } else {
+                        this.showError(result.message || '身份验证失败，请重新登录');
+                    }
+                } catch (error) {
+                    console.error('验证请求失败:', error);
+                    this.showError('网络连接失败，请检查网络连接后重试');
+                }
+            }
+
+            storeUserInfo(userInfo) {
+                // 将用户信息存储到localStorage
+                localStorage.setItem('sso_user_info', JSON.stringify(userInfo));
+                localStorage.setItem('sso_login_time', new Date().toISOString());
+            }
+
+            redirectToMain() {
+                // 跳转到主页面
+                window.location.href = '/index-test2.html';
+            }
+
+            showError(message) {
+                const errorElement = document.getElementById('errorMessage');
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                
+                // 3秒后自动跳转到登录页面
+                setTimeout(() => {
+                    if (this.exiturl) {
+                        window.location.href = this.exiturl;
+                    } else {
+                        window.location.href = '/';
+                    }
+                }, 3000);
+            }
+        }
+
+        // 页面加载完成后初始化SSO处理器
+        document.addEventListener('DOMContentLoaded', () => {
+            new SSOHandler();
+        });
+    </script>
+</body>
+</html> 
