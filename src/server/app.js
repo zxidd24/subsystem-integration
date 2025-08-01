@@ -96,7 +96,7 @@ app.get('/logout', (req, res) => {
     `);
 });
 
-// 原有的数据查询SQL
+// 数据查询SQL
 const table_show = `
 SELECT
     left(sys_article.village_code,6) as "区代码",
@@ -160,7 +160,7 @@ GROUP BY
 
 // 启动服务器
 const server = app.listen(port, () => {
-    console.log(`🌐 SSO测试路径: http://localhost:${port}/test-sso.html`);
+    console.log(`SSO测试路径: http://localhost:${port}/test-sso.html`);
     console.log(`服务器运行在 http://localhost:${port}`);
     console.log(`SSO拦截页面: http://localhost:${port}/sso/index.html`);
     console.log(`主页面: http://localhost:${port}/index-test2.html`);
